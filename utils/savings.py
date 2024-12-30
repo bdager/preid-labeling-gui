@@ -20,7 +20,7 @@ def read_txt_file(file_path):
                 bbox_mot16[0] + bbox_mot16[2],
                 bbox_mot16[1] + bbox_mot16[3],
             ]
-            value = {"id": int(elements[1]), "BboxP": bbox, "BboxF": [-1]}
+            value = {"id": int(elements[1]), "BboxP": bbox}
             if key in data_dict:
                 data_dict[key].append(value)
             else:
