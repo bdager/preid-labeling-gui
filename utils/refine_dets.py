@@ -291,73 +291,6 @@ def correct_flickering(data, max_age=10, from_frame=None, to_frame=None):
     return corrected_data
 
 
-# def correct_flickering_barrido(data, max_age=10):
-#     """
-#     # Correct flickering detections among a maximum of max_age frames.
-#     """
-#     prev_dets = []
-#     # act_det = []
-#     corrected_data = {}
-
-#     for frame, frame_dets in data.items():
-#         act_dets = frame_dets    
-            
-#         if (int(frame) == 1 and prev_dets == []) or int(frame) + max_age >= len(data):
-#             # ipdb.set_trace()
-#             corrected_data[int(frame)] = act_dets
-#             prev_dets = act_dets
-#             # print("Frame: ", frame)
-#             # print(act_dets)
-#             # print(corrected_data[int(frame)])
-#             continue       
-        
-#         if not (len(prev_dets) == 0):
-#             for n, p_det in enumerate(prev_dets):     
-#                 if not(len(act_dets) == 0):                       
-#                     id_values = [det['id'] for det in frame_dets if 'id' in det] 
-#                     # Check if the id of the previous detection is in the current frame
-#                     # If it is, continue with the next frame detection
-#                     # If it is not, check if the id of the previous detection is in the future frames 
-#                     # print(frame, p_det, id_values)                  
-#                     if p_det["id"] in id_values:
-#                         continue                     
-                
-#                 # Check if the id of the previous detection is in the future frames within the max_age
-#                 for fut_frame in range(int(frame)+1, int(frame)+max_age):
-#                     # future_dets = data.get(str(fut_frame))
-#                     # print ("fut_frame: ", fut_frame)
-#                     # print("data: ", data[fut_frame])
-#                     future_dets = data[fut_frame]
-#                     if future_dets is None:
-#                         continue
-#                     id_fut_values = [fut_det['id'] for fut_det in future_dets if 'id' in fut_det]
-#                     if p_det["id"] in id_fut_values:
-#                         bbox_x0, bbox_y0 = p_det["BboxP"][0], p_det["BboxP"][1] 
-#                         bbox_x1, bbox_y1 = p_det["BboxP"][2], p_det["BboxP"][3] 
-                        
-#                         dx0 = future_dets[id_fut_values.index(p_det["id"])]["BboxP"][0] - p_det["BboxP"][0]
-#                         dy0 = future_dets[id_fut_values.index(p_det["id"])]["BboxP"][1] - p_det["BboxP"][1]
-#                         dx1 = future_dets[id_fut_values.index(p_det["id"])]["BboxP"][2] - p_det["BboxP"][2]
-#                         dy1 = future_dets[id_fut_values.index(p_det["id"])]["BboxP"][3] - p_det["BboxP"][3]
-                        
-#                         for n in range(int(frame), fut_frame):
-#                             dist = fut_frame - int(frame)
-#                             bbox_x0 += dx0/dist
-#                             bbox_y0 += dy0/dist
-#                             bbox_x1 += dx1/dist
-#                             bbox_y1 += dy1/dist                                
-#                             bbox = list(map(round,[bbox_x0, bbox_y0, bbox_x1, bbox_y1]))             
-                        
-#                             new_det = {"id": p_det["id"], "BboxP": bbox, "BboxF": []}                        
-#                             data[n].append(new_det)
-#                         break 
-                            
-#         corrected_data[int(frame)] = act_dets
-#         prev_dets = act_dets
-
-#     return corrected_data
-
-
 def correct_flickering_barrido(data, max_age=10, from_frame=None, to_frame=None):
     """
     Correct flickering detections among a maximum of max_age frames.
@@ -414,7 +347,7 @@ def correct_flickering_barrido(data, max_age=10, from_frame=None, to_frame=None)
                                 bbox_y1 += dy1 / dist                                
                                 bbox = list(map(round,[bbox_x0, bbox_y0, bbox_x1, bbox_y1]))             
                             
-                                new_det = {"id": p_det["id"], "BboxP": bbox, "BboxF": []}                        
+                                new_det = {"id": p_det["id"], "BboxP": bbox}                        
                                 data[str(n)].append(new_det)
                             break
                             

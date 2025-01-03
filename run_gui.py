@@ -168,6 +168,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 # Check if the detection has bboxF key
                 if "BboxF" in det:
                     bboxF = det["BboxF"]
+                    self.bboxF_status = True
                 else:
                     bboxF = None
                     self.bboxF_status = False
