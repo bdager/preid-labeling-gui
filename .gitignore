@@ -1,0 +1,5 @@
+# Ignore all .pyc files and __pycache__ directories
+*.pyc
+__pycache__/
+ui_sources/__pycache__/
+utils/__pycache__/
